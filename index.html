@@ -1,65 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Catatan Harian</title>
+    <style>
+        /* Mengatur tampilan dasar halaman */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        /* Mempercantik kotak teks */
+        textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box; /* Agar padding tidak merusak lebar */
+        }
+
+        /* Mengatur tombol */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-save {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        button:active {
+            transform: scale(0.95); /* Efek membal saat diklik */
+        }
+    </style>
 </head>
 <body>
-    <h1>Catatan Harianku</h1>
-    <textarea id="isiCatatan" placeholder="Tulis catatan di sini..."></textarea>
-    <br>
-    <button onclick="simpan()">Simpan Catatan</button>
 
-    <script>
-        function simpan() {
-            const teks = document.getElementById('isiCatatan').value;
-            alert('Catatan berhasil disimpan: ' + teks);
-            // Logika penyimpanan lebih lanjut akan kita buat nanti
+<div class="container">
+    <h1>Catatan Harianku</h1>
+    <textarea id="isiCatatan" rows="8" placeholder="Tulis inspirasimu hari ini..."></textarea>
+    
+    <div class="btn-group">
+        <button class="btn-save" onclick="simpanKeHP()">Simpan</button>
+        <button class="btn-delete" onclick="hapusCatatan()">Hapus</button>
+    </div>
+</div>
+
+<script>
+    function simpanKeHP() {
+        const data = document.getElementById('isiCatatan').value;
+        localStorage.setItem('catatan_user', data);
+        alert('Catatan tersimpan di HP!');
+    }
+
+    function hapusCatatan() {
+        if (confirm('Hapus catatan ini?')) {
+            localStorage.removeItem('catatan_user');
+            document.getElementById('isiCatatan').value = '';
         }
-    </script>
+    }
+
+    window.onload = function() {
+        const savedData = localStorage.getItem('catatan_user');
+        if (savedData) {
+            document.getElementById('isiCatatan').value = savedData;
+        }
+    };
+</script>
+
 </body>
 </html>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Aplikasi Catatan Harian</title>
-</head>
-<body>
-    <h1>Catatan Harianku</h1>
-    <textarea id="isiCatatan" rows="10" cols="30" placeholder="Tulis sesuatu..."></textarea>
-    <br><br>
-    
-    <!-- Tombol Simpan -->
-    <button onclick="simpanKeHP()">Simpan Catatan</button>
-    
-    <!-- Tombol Hapus -->
-    <button onclick="hapusCatatan()" style="color: red;">Hapus Semua</button>
-
-    <script>
-        // Fungsi menyimpan data
-        function simpanKeHP() {
-            const data = document.getElementById('isiCatatan').value;
-            localStorage.setItem('catatan_user', data);
-            alert('Catatan tersimpan!');
-        }
-
-        // Fungsi menghapus data
-        function hapusCatatan() {
-            if (confirm('Yakin ingin menghapus catatan?')) {
-                localStorage.removeItem('catatan_user'); // Hapus dari memori
-                document.getElementById('isiCatatan').value = ''; // Kosongkan layar
-                alert('Catatan telah dihapus.');
-            }
-        }
-
-        // Memuat data saat aplikasi dibuka
-        window.onload = function() {
-            const savedData = localStorage.getItem('catatan_user');
-            if (savedData) {
-                document.getElementById('isiCatatan').value = savedData;
-            }
-        };
-    </script>
-</body>
-</html>
 
