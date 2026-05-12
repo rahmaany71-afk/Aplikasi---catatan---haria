@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplikasi Catatan Harian</title>
+</head>
+<body>
+    <h1>Catatan Harianku</h1>
+    <textarea id="isiCatatan" placeholder="Tulis catatan di sini..."></textarea>
+    <br>
+    <button onclick="simpan()">Simpan Catatan</button>
+
+    <script>
+        function simpan() {
+            const teks = document.getElementById('isiCatatan').value;
+            alert('Catatan berhasil disimpan: ' + teks);
+            // Logika penyimpanan lebih lanjut akan kita buat nanti
+        }
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplikasi Catatan Harian</title>
+</head>
+<body>
+    <h1>Catatan Harianku</h1>
+    <textarea id="isiCatatan" rows="10" cols="30" placeholder="Tulis sesuatu..."></textarea>
+    <br><br>
+    
+    <!-- Tombol Simpan -->
+    <button onclick="simpanKeHP()">Simpan Catatan</button>
+    
+    <!-- Tombol Hapus -->
+    <button onclick="hapusCatatan()" style="color: red;">Hapus Semua</button>
+
+    <script>
+        // Fungsi menyimpan data
+        function simpanKeHP() {
+            const data = document.getElementById('isiCatatan').value;
+            localStorage.setItem('catatan_user', data);
+            alert('Catatan tersimpan!');
+        }
+
+        // Fungsi menghapus data
+        function hapusCatatan() {
+            if (confirm('Yakin ingin menghapus catatan?')) {
+                localStorage.removeItem('catatan_user'); // Hapus dari memori
+                document.getElementById('isiCatatan').value = ''; // Kosongkan layar
+                alert('Catatan telah dihapus.');
+            }
+        }
+
+        // Memuat data saat aplikasi dibuka
+        window.onload = function() {
+            const savedData = localStorage.getItem('catatan_user');
+            if (savedData) {
+                document.getElementById('isiCatatan').value = savedData;
+            }
+        };
+    </script>
+</body>
+</html>
+
